@@ -1,0 +1,36 @@
+---
+- name: Install a list of packages
+  ansible.builtin.apt:
+    pkg: "{{ packages }}"
+  tags:
+    - essentials
+    - security_ssh_hardening
+    - setup_roles_users_tokens
+    - generate_vm_template
+
+- name: Strengthening the SSH security of the proxmox server
+  ansible.builtin.include_tasks:
+    file: security_ssh_hardening.yml
+    apply:
+      tags:
+        - security_ssh_hardening
+  tags:
+    - always
+
+- name: Add setup roles users tokens
+  ansible.builtin.include_tasks:
+    file: setup_roles_users_tokens.yml
+    apply:
+      tags:
+        - setup_roles_users_tokens
+  tags:
+    - always
+
+- name: Generate vm template
+  ansible.builtin.include_tasks:
+    file: generate_vm_template.yml
+    apply:
+      tags:
+        - generate_vm_template
+  tags:
+    - always
