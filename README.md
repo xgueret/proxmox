@@ -1,26 +1,82 @@
-# Proxmox
+# Automated Proxmox Deployment with Ansible & Terraform
 
-## Table of Contents
+[TOC]
+
+## Description
+
+This repository provides secure and automated configuration of a **Proxmox VE** server using **Ansible** and **Terraform**. It also manages GitHub repositories for configuration publishing.
+
+## Features include:
+
+- SSH security hardening
+- Proxmox roles, users, and token creation
+- Ubuntu Cloud-Init VM templates
+- GitHub repository provisioning with Terraform
+
+## Project Structure
+
+```bash
+.
+├── ansible
+│   ├── ansible.cfg
+│   ├── host_vars
+│   │   └── pve
+│   ├── inventory.yml
+│   ├── playbook.yml
+│   ├── roles
+│   │   ├── configure
+│   │   └── manage
+│   └── SHA256SUMS
+├── check_ansible_vault.sh
+├── LICENSE
+├── README.md
+├── requirements.txt
+└── terraform
+    └── github
+        ├── data_sources.tf
+        ├── main.tf
+        ├── outputs.tf
+        ├── providers.tf
+        ├── terraform.tfstate
+        ├── terraform.tfvars
+        └── variables.tf
+
+
+```
+
+## Requirements
+
+- Ansible
+- Terraform
+- SSH access to your Proxmox instance
+- GitHub access with a personal token
+
+### Installing dependencies
+
+```bash
+pip install -r requirements.txt
+pre-commit install
+```
 
 
 
 ## 1. Installing Proxmox on my Acer XC-605 PC
 
-### 🔽 Download the Proxmox ISO
+### 1.1 Download the Proxmox ISO
 
 ```bash
 mkdir -p ~/Worspace/tmp/proxmox
 cd ~/Worspace/tmp/proxmox
 ```
 
-### 1.1 Download the archive and SHA256 file
+### 1.2 Download the archive and SHA256 file
 
 ```bash
 wget https://enterprise.proxmox.com/iso/proxmox-ve_8.4-1.iso
 wget https://enterprise.proxmox.com/iso/SHA256SUMS
 ```
 
-### 1.2 Verify the SHA-256 hash
+### 1.3 Verify the SHA-256 hash
 
 In the same directory as the downloaded files:
 
@@ -29,7 +85,7 @@ cat SHA256SUMS | grep proxmox-ve_8.4-1.iso | sha256sum -c
 proxmox-ve_8.4-1.iso: OK
 ```
 
-2. ## 💾 Install proxmox with Ventoy
+## 2. Install proxmox with Ventoy
 
 (i) see https://www.ventoy.net/en/index.html or https://doc.ubuntu-fr.org/ventoy
 
@@ -68,7 +124,7 @@ Some settings may block booting or installation.
 
 Follow the instructions, and there you go 🎉
 
-## 3. 🔐 **SSH Configuration on my Linux workstation**
+## 3. SSH Configuration on my Linux workstation
 
 Connect to the Proxmox server using an SSH key pair
 
@@ -106,9 +162,26 @@ cd /proxmox
 cd ansible
 ```
 
-Run the playbook with the following tag to configure the ansible user on the target server
+## 4. Usage
+
+### 4.1. Configure Inventory
+
+Edit `ansible/inventory.yml` to add your Proxmox host.
+
+### 4.2. Vaulted Secrets
+
+Passwords and IP addresses are encrypted in:
+ `ansible/host_vars/<host>/vault/main.yml`
+
+### 4.3 Run the playbook with the following tag to configure the ansible user on the target server
 
 ```bash
 ansible-playbook -u root playbook.yml --tags "security_ssh_hardening"
+```
+
+### 4.4 Then run the playbook without the `-u root` parameter
+
+```bash
+ansible-playbook playbook.yml
 ```
 
