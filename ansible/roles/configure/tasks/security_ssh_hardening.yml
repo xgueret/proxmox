@@ -31,7 +31,7 @@
 - name: Add identity key to authorized keys on host
   ansible.posix.authorized_key:
     user: "{{ configure_ssh_user }}"
-    key: "{{ lookup('file', ssh_identity_key) }}"
+    key: "{{ lookup('file', configure_ssh_identity_key) }}"
   register: add_identity_key
   when: configure_ssh_identity_key is defined and configure_ssh_user is defined
 
