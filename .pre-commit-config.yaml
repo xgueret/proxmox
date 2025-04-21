@@ -1,4 +1,9 @@
+---
 repos:
+  - repo: https://github.com/ansible/ansible-lint
+    rev: v25.1.1  # remplace par la version stable la plus récente
+    hooks:
+      - id: ansible-lint
   - repo: local
     hooks:
       - id: check-ansible-vault
@@ -7,3 +12,9 @@ repos:
         language: system
         files: (^|/)vault/.*$
         stages: [pre-commit]
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.99.0  # remplace par la dernière version stable
+    hooks:
+      - id: terraform_fmt
+      - id: terraform_validate
+      - id: terraform_tflint

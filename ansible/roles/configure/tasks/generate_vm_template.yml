@@ -14,5 +14,5 @@
 ## Build template
 - name: Build template
   ansible.builtin.include_tasks: tasks_generate_vm_template.yml
-  loop: "{{ templates }}"
+  loop: "{{ configure_templates }}"
   when: item.name not in qm_list.stdout

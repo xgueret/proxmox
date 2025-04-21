@@ -12,5 +12,5 @@ resource "github_repository" "repo" {
 #   permission = each.value  # Permission level for the collaborator (pull, push, or admin)
 
 #   depends_on = [github_repository.repo]
-  
+
 # }
