@@ -1,5 +1,7 @@
 # 🚀 Automated Proxmox Deployment with Ansible & Terraform
 
+![Stars](https://img.shields.io/github/stars/xgueret/proxmox?style=social) ![Last Commit](https://img.shields.io/github/last-commit/xgueret/proxmox) ![Status](https://img.shields.io/badge/Status-Active-brightgreen)
+
 [TOC]
 
 ## 📋 Description
@@ -193,3 +195,20 @@ ansible-playbook playbook.yml
 ```
 
 ## 📚 **Enjoy your automated Proxmox setup!** 😎
+
+
+
+---
+
+## 👥 Contributors
+
+- **Author**: Xavier GUERET 
+  [![GitHub followers](https://img.shields.io/github/followers/xgueret?style=social)](https://github.com/xgueret) [![Twitter Follow](https://img.shields.io/twitter/follow/xgueret?style=social)](https://x.com/hixmaster) [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/xavier-gueret-47bb3019b/)
+
+## 👥 Contributing
+
+Contributions are welcome! Please feel free to submit a [Pull Request](https://github.com/xgueret/proxmox/pulls).
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/xgueret/proxmox/blob/main/LICENSE) file for details.
