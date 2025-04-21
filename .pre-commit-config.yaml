@@ -1,5 +1,13 @@
 ---
 repos:
+  - repo: https://github.com/scop/pre-commit-shfmt
+    rev: v3.11.0-1
+    hooks:
+      - id: shfmt         # prebuilt upstream executable
+  - repo: https://github.com/koalaman/shellcheck-precommit
+    rev: v0.10.0
+    hooks:
+      - id: shellcheck
   - repo: https://github.com/ansible/ansible-lint
     rev: v25.1.1  # remplace par la version stable la plus récente
     hooks:
