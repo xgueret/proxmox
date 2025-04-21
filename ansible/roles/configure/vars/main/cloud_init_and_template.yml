@@ -1,5 +1,5 @@
-# Template for the Ubuntu 22.04 server cloud image
-templates:
+---
+configure_templates:
   - name: "ubuntu-2204-cloudinit-template"
     id: 9001
     memory: 2048
@@ -17,11 +17,11 @@ templates:
     cpu: 2
     desc: "ubuntu-24.04-server-cloudimg-amd64.img"
     cloud_init_image:
-        name: ubuntu-24.04-server 
-        url: https://cloud-images.ubuntu.com/releases/noble/release/ubuntu-24.04-server-cloudimg-amd64.img
-        url_checksum: sha256:071fceadf1ea57a388ff7a1ccb4127155d691a511f6a207b4c11b120563855e2
-        path: /tmp/ubuntu-22.04-server-cloudimg-amd64-disk-kvm.img
-        # curl -O https://cloud-images.ubuntu.com/releases/noble/release/SHA256SUMS | grep ubuntu-24.04-server-cloudimg-amd64.img
+      name: ubuntu-24.04-server
+      url: https://cloud-images.ubuntu.com/releases/noble/release/ubuntu-24.04-server-cloudimg-amd64.img
+      url_checksum: sha256:071fceadf1ea57a388ff7a1ccb4127155d691a511f6a207b4c11b120563855e2
+      path: /tmp/ubuntu-22.04-server-cloudimg-amd64-disk-kvm.img
+      # curl -O https://cloud-images.ubuntu.com/releases/noble/release/SHA256SUMS | grep ubuntu-24.04-server-cloudimg-amd64.img
 
-ansible_key_pub: "{{ lookup('file', '~/.ssh/id_vm_proxmox_rsa.pub') }}"
-root_passwd: '{{ lookup("env", "ssh_key_file") or "rootpasswd" }}'
+configure_ansible_key_pub: "{{ lookup('file', '~/.ssh/id_vm_proxmox_rsa.pub') }}"
+configure_root_passwd: '{{ lookup("env", "ssh_key_file") or "rootpasswd" }}'

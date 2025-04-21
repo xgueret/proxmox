@@ -1,7 +1,7 @@
 ---
 - name: Install a list of packages
   ansible.builtin.apt:
-    pkg: "{{ packages }}"
+    pkg: "{{ configure_packages }}"
   tags:
     - essentials
     - security_ssh_hardening

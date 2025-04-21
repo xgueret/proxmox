@@ -1,32 +1,32 @@
-# Automated Proxmox Deployment with Ansible & Terraform
+# 🚀 Automated Proxmox Deployment with Ansible & Terraform
 
 [TOC]
 
-## Description
+## 📋 Description
 
 This repository provides secure and automated configuration of a **Proxmox VE** server using **Ansible** and **Terraform**. It also manages GitHub repositories for configuration publishing.
 
-## Features include:
+## ✨ Features include:
 
-- SSH security hardening
-- Proxmox roles, users, and token creation
-- Ubuntu Cloud-Init VM templates
-- GitHub repository provisioning with Terraform
+- 🔐 SSH security hardening  
+- 👤 Proxmox roles, users, and token creation  
+- 🐧 Ubuntu Cloud-Init VM templates  
+- 🌐 GitHub repository provisioning with Terraform
 
-## Project Structure
+## 📁 Project Structure
 
 ```bash
 .
 ├── ansible
-│   ├── ansible.cfg
-│   ├── host_vars
-│   │   └── pve
-│   ├── inventory.yml
-│   ├── playbook.yml
-│   ├── roles
-│   │   ├── configure
-│   │   └── manage
-│   └── SHA256SUMS
+│   ├── ansible.cfg
+│   ├── host_vars
+│   │   └── pve
+│   ├── inventory.yml
+│   ├── playbook.yml
+│   ├── roles
+│   │   ├── configure
+│   │   └── manage
+│   └── SHA256SUMS
 ├── check_ansible_vault.sh
 ├── LICENSE
 ├── README.md
@@ -40,111 +40,102 @@ This repository provides secure and automated configuration of a **Proxmox VE** 
         ├── terraform.tfstate
         ├── terraform.tfvars
         └── variables.tf
-
-
 ```
 
-## Requirements
+## ✅ Requirements
 
-- Ansible
-- Terraform
-- SSH access to your Proxmox instance
-- GitHub access with a personal token
+- 🐍 Ansible
+- 🌍 Terraform
+- 🔐 SSH access to your Proxmox instance
+- 🐙 GitHub access with a personal token
 
-### Installing dependencies
+## 📦 Installing dependencies
 
 ```bash
 pip install -r requirements.txt
 pre-commit install
 ```
 
+## 🧩 1. Installing Proxmox on my Acer XC-605 PC
 
-
-## 1. Installing Proxmox on my Acer XC-605 PC
-
-### 1.1 Download the Proxmox ISO
+### 1.1. Download the Proxmox ISO
 
 ```bash
 mkdir -p ~/Worspace/tmp/proxmox
 cd ~/Worspace/tmp/proxmox
 ```
 
-### 1.2 Download the archive and SHA256 file
+### 1.2. Download the archive and SHA256 file
 
 ```bash
 wget https://enterprise.proxmox.com/iso/proxmox-ve_8.4-1.iso
 wget https://enterprise.proxmox.com/iso/SHA256SUMS
 ```
 
-### 1.3 Verify the SHA-256 hash
-
-In the same directory as the downloaded files:
+### 1.3. Verify the SHA-256 hash
 
 ```bash
 cat SHA256SUMS | grep proxmox-ve_8.4-1.iso | sha256sum -c
-proxmox-ve_8.4-1.iso: OK
+# Output:
+# proxmox-ve_8.4-1.iso: OK
 ```
 
-## 2. Install proxmox with Ventoy
+## 💽 2. Install Proxmox with Ventoy
 
-(i) see https://www.ventoy.net/en/index.html or https://doc.ubuntu-fr.org/ventoy
+📝 See [Ventoy official site](https://www.ventoy.net/en/index.html) or [Ubuntu-fr doc](https://doc.ubuntu-fr.org/ventoy)
 
-If you have a USB drive with ventoy, simply copy the ISO file to the **Ventoy partition of the USB drive** (it opens like a normal drive)
+If you have a USB drive with Ventoy, simply copy the ISO:
 
 ```bash
 cp ~/Workspace/tmp/proxmox/proxmox-ve_8.4-1.iso /media/xgueret/Ventoy
 ```
 
-⚙️ **BIOS/UEFI Settings**
+### 2.1. BIOS/UEFI Settings
 
-Some settings may block booting or installation.
+> ℹ️ At startup, press the `Delete` key to access the BIOS menu
 
-> :information_source: At startup, press the Delete key to access the BIOS menu
+- ❌ **Disable Secure Boot**
+- ✅ Enable **VT-x/Virtualization**
 
-* **Disable Secure Boot** (Proxmox doesn't support it yet)
-* Enable **VT-x/Virtualization** in the BIOS (it's important for proxmox)
+👉 Use the USB drive with Ventoy on your Acer XC-605 to boot and install Proxmox
 
-:point_right: Use the USB drive with Ventoy in my Acer XC-605 pc to boot and install Proxmox
+> ⌨️ At startup, press **F12** to access the boot menu
 
-> :information_source: At startup press **F12** key to access the boot menu
->
-> How to solve the problem during Proxmox installation
->
-> I encountered the same problem during my Proxmox8 installtion ... https://forum.proxmox.com/threads/proxmox-ve-8-2-install-failing.153913/
->
-> 💡Solution:
->
-> When you're at the installation menu, press `e` to edit the boot options.
->
-> At the line starting with `linux`, add at the end:
->
-> ```bash
-> nomodeset
-> ```
+### 2.2. Troubleshooting Installation
 
-Follow the instructions, and there you go 🎉
+💡 If you encounter an issue during Proxmox 8 installation (see [Proxmox forum thread](https://forum.proxmox.com/threads/proxmox-ve-8-2-install-failing.153913/)):
 
-## 3. SSH Configuration on my Linux workstation
+➡️ At the installation menu, press `e` to edit boot options.
+➡️ At the line starting with `linux`, append:
 
-Connect to the Proxmox server using an SSH key pair
+```bash
+nomodeset
+```
+
+Then proceed with installation 🎉
+
+## 🔑 3. SSH Configuration on my Linux workstation
+
+### 3.1. Generate a key pair
 
 ```bash
 ssh-keygen -t rsa -b 4096 -f ~/.ssh/proxmox -C "root@x.x.x.x"
 ```
 
-> :information_source: *Include a passphrase if necessary.*
->
-> ```bash
-> ls -al ~/.ssh
-> ```
+> ℹ️ Include a passphrase if necessary
+> 📁 Check keys:
 
-Copy the public key to the Proxmox server
+```bash
+ls -al ~/.ssh
+```
+
+### 3.2. Copy the key to Proxmox
 
 ```bash
 ssh-copy-id -i ~/.ssh/proxmox.pub root@x.x.x.x
 ```
 
-Optionally activate ssh-agent
+### 3.3. Activate ssh-agent (optional)
 
 ```bash
 eval $(ssh-agent)
@@ -152,26 +143,42 @@ ssh-add ~/.ssh/proxmox
 ssh root@x.x.x.x
 ```
 
-Get the repository:
+### 3.4. Get the repository
 
 ```bash
 cd ~/Workspace
-git clone 
-cd /proxmox
-# at this point you need to activate the Python venv and ensure that Ansible is installed
+git clone <REPO_URL>
+cd proxmox
 cd ansible
 ```
 
-## 4. Usage
+> Make sure Python venv is activated and Ansible is installed
+
+## 🚀 4. Usage
 
 ### 4.1. Configure Inventory
 
-Edit `ansible/inventory.yml` to add your Proxmox host.
+Edit the file:
+
+```bash
+ansible/inventory.yml
+```
+
+Add your Proxmox host.
 
 ### 4.2. Vaulted Secrets
 
-Passwords and IP addresses are encrypted in:
- `ansible/host_vars/<host>/vault/main.yml`
+Passwords and IPs are encrypted in:
+
+```bash
+ansible/host_vars/<host>/vault/main.yml
+```
+
+> (i) check all with pre-commit
+>
+> ```+-
+> pre-commit run --all-files
+> ```
 
 ### 4.3 Run the playbook with the following tag to configure the ansible user on the target server
 
@@ -181,7 +188,8 @@ ansible-playbook -u root playbook.yml --tags "security_ssh_hardening"
 
 ### 4.4 Then run the playbook without the `-u root` parameter
 
-```bash
+```
 ansible-playbook playbook.yml
 ```
 
+## 📚 **Enjoy your automated Proxmox setup!** 😎

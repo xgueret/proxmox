@@ -11,7 +11,7 @@
 - name: Install qemu-guest-agent into cloud image and set root password
   ansible.builtin.command: |
     virt-customize -a {{ item.cloud_init_image.path }} \
-    --root-password password:{{ root_passwd }} \
+    --root-password password:{{ configure_root_passwd }} \
     --install qemu-guest-agent
   changed_when: false
 
@@ -43,7 +43,7 @@
 - name: Add public key for ansible user
   ansible.builtin.command: |
     virt-customize -a {{ item.cloud_init_image.path }} \
-    --run-command "echo '{{ ansible_key_pub }}' > /home/ansible/.ssh/authorized_keys" \
+    --run-command "echo '{{ configure_ansible_key_pub }}' > /home/ansible/.ssh/authorized_keys" \
     --run-command 'chown ansible:ansible /home/ansible/.ssh/authorized_keys' \
     --run-command 'chmod 600 /home/ansible/.ssh/authorized_keys'
   changed_when: false

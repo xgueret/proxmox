@@ -5,6 +5,6 @@
     apply:
       tags:
         - display_token
-  loop: "{{ tokens }}"
+  loop: "{{ manage_tokens }}"
   tags:
     - always

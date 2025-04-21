@@ -2,5 +2,5 @@
 # handlers file for roles/bootstrap-vm
 - name: Restart sshd
   ansible.builtin.service:
-    name: "{{ sshd }}"
+    name: "{{ configure_sshd }}"
     state: restarted

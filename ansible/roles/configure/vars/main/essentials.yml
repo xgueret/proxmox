@@ -1,5 +1,5 @@
 ---
-packages:
+configure_packages:
 # The essentials
   - libguestfs-tools
   - jq

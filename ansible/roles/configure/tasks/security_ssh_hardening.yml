@@ -21,7 +21,7 @@
 # Add sudoers users to wheel group
 - name: Add sudoers users to wheel group
   ansible.builtin.user:
-    name: "{{ ssh_user }}"
+    name: "{{ configure_ssh_user }}"
     groups: "wheel"
     append: true
     state: present
@@ -30,15 +30,15 @@
 # Add identity key to authorized keys on host
 - name: Add identity key to authorized keys on host
   ansible.posix.authorized_key:
-    user: "{{ ssh_user }}"
+    user: "{{ configure_ssh_user }}"
     key: "{{ lookup('file', ssh_identity_key) }}"
   register: add_identity_key
-  when: ssh_identity_key is defined and ssh_user is defined
+  when: configure_ssh_identity_key is defined and configure_ssh_user is defined
 
 # Disable empty password login
 - name: Disable empty password login
   ansible.builtin.lineinfile:
-    dest: "{{ sshd_config }}"
+    dest: "{{ configure_sshd_config }}"
     regexp: "^#?PermitEmptyPasswords"
     line: "PermitEmptyPasswords no"
   notify: Restart sshd
@@ -46,7 +46,7 @@
 # Disable password login
 - name: Disable password login
   ansible.builtin.lineinfile:
-    dest: "{{ sshd_config }}"
+    dest: "{{ configure_sshd_config }}"
     regexp: '^(#\s*)?PasswordAuthentication '
     line: "PasswordAuthentication no"
   when:

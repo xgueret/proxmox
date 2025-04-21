@@ -20,4 +20,4 @@
   changed_when: >
     add_script_result.stdout.find('Command succeeded') != -1
   environment:
-    GEN_PASS: "{{ gen_password }}"
+    GEN_PASS: "{{ configure_gen_password }}"
