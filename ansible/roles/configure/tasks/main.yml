@@ -1,4 +1,27 @@
 ---
+- name: Ensure Debian bookworm main contrib non-free non-free-firmware repo is present
+  ansible.builtin.lineinfile:
+    path: /etc/apt/sources.list
+    line: 'deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware'
+    state: present
+    insertafter: EOF
+  register: debian_repo_added
+  tags:
+    - essentials
+    - security_ssh_hardening
+    - setup_roles_users_tokens
+    - generate_vm_template
+
+- name: Update apt cache if the repository was added
+  ansible.builtin.apt:
+    update_cache: true
+  when: debian_repo_added.changed
+  tags:
+    - essentials
+    - security_ssh_hardening
+    - setup_roles_users_tokens
+    - generate_vm_template
+
 - name: Install a list of packages
   ansible.builtin.apt:
     pkg: "{{ configure_packages }}"
