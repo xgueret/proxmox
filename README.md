@@ -114,6 +114,8 @@ cp ~/Workspace/tmp/proxmox/proxmox-ve_8.4-1.iso /media/xgueret/Ventoy
 nomodeset
 ```
 
+press **`F10`**
+
 Then proceed with installation 🎉
 
 ## 🔑 3. SSH Configuration on my Linux workstation
@@ -205,9 +207,13 @@ ansible-playbook playbook.yml
 - **Author**: Xavier GUERET 
   [![GitHub followers](https://img.shields.io/github/followers/xgueret?style=social)](https://github.com/xgueret) [![Twitter Follow](https://img.shields.io/twitter/follow/xgueret?style=social)](https://x.com/hixmaster) [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/xavier-gueret-47bb3019b/)
 
-## 👥 Contributing
+
+
+## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a [Pull Request](https://github.com/xgueret/proxmox/pulls).
+
+
 
 ## 📄 License
 
